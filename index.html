@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="libs/react.js"></script>
+    <script src="libs/react-dom.js"></script>
+    <script src="libs/browser.min.js"></script>
+    <style>
+        .box{
+            position: absolute;
+            left: 50%;
+            top: 20%;
+            margin-left: -200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script type="text/babel">
+        var Time = React.createClass({
+            getInitialState:function(){
+                return {
+                    value:"",
+                    flag:false,
+                    obj:{}
+                }
+            },
+            clickHandle:function(){
+
+                var begin = ReactDOM.findDOMNode(this.refs.begin);
+                var num = begin.value;
+
+                var that = this;
+
+                if(this.state.flag){
+                    clearInterval(this.state.obj.timer);
+                    that.setState({
+                        value:num
+                    })
+                }
+
+                function runTime(){
+                    if(num == 0){
+                        clearInterval(that.state.obj.timer);
+                    }
+                    that.setState({
+                        value:num--
+                    })
+                }
+
+                runTime();
+
+                this.state.obj.timer = setInterval(runTime,1000);  
+
+                this.state.flag = true;
+            },
+            render:function(){
+                return (
+                    <div className="box">
+                        <input type="text" placeholder="请输入时间" ref="begin"/>
+                        <button onClick={this.clickHandle}>开始倒计时</button>
+                        <input type="text" value={this.state.value} ref="end"/>
+                    </div>
+                )
+            }
+        })
+
+        ReactDOM.render(
+            <Time />,
+            document.getElementById('container') 
+        )
+    </script>
+</body>
+</html>
