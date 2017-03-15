@@ -31,16 +31,21 @@
                 var begin = ReactDOM.findDOMNode(this.refs.begin);
                 var num = begin.value;
 
-                if(num == ""){
-                    alert('请输入时间');
-                    return;
-                }
-                if(num < 0 || typeof(num) != "number"){
-                    alert('请输入正确的时间');
-                    return;
-                }
-
+                
+                
                 var that = this;
+
+                if(!(/\d/.test(num) && num > 0)){
+                    clearInterval(this.state.obj.timer);
+
+                    that.setState({
+                        value:0
+                    })
+
+                    alert('请输入大于0的正确时间');
+                    
+                    return;
+                }
 
                 if(this.state.flag){
                     clearInterval(this.state.obj.timer);
