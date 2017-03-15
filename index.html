@@ -31,6 +31,11 @@
                 var begin = ReactDOM.findDOMNode(this.refs.begin);
                 var num = begin.value;
 
+                if(num == "" || num < 0){
+                    alert('请输入时间');
+                    return ;
+                }
+
                 var that = this;
 
                 if(this.state.flag){
